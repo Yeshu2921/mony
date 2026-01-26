@@ -1,0 +1,214 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #feece2;
+  font-family: "Arial Black", sans-serif;
+}
+
+.container {
+  background-color: #ffbe98;
+  padding: 4rem;
+  border-radius: 3rem;
+  border-style: groove;
+  width: 40%;
+  min-height: 45vh;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.container:hover {
+  transform: scale(1.03) rotateY(5deg);
+}
+
+h2 {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  background-color: #feece2;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+#close {
+  text-align: center;
+    width: 30px;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #888;
+}
+
+#close:hover {
+    background-color: red;
+    color: white;
+}
+form select,
+button,
+input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 0.75rem;
+}
+
+.amount {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.amount input {
+  width: 100%;
+  border: 1px solid lightgray;
+  border-radius: 0.75rem;
+  height: 3rem;
+  padding-left: 0.5rem;
+  font-size: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.select-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #feece2;
+  border-radius: 1rem;
+  border: 1px solid rgb(10, 9, 9);
+  padding: 0.5rem 1rem;
+  width: 100%;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.select-container:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.select-container img {
+  max-width: 2.5rem;
+  margin-right: 0.5rem;
+}
+
+.dropdown i {
+  font-size: 1.5rem;
+  color: #333;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.dropdown i:hover {
+  transform: translateY(-5px);
+}
+
+.msg {
+  margin: 2rem 0;
+  text-align: center;
+  background: #fff;
+  border-radius: 2rem;
+  padding: 0.7rem;
+  font-size: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s;
+}
+
+.msg:hover {
+  transform: scale(1.05);
+}
+
+form button {
+  height: 3rem;
+  background-color: #feece2;
+  color: black;
+  font-style: oblique;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border-style: dashed;
+  transition: transform 0.3s;
+}
+
+form button:hover {
+  transform: scale(1.05);
+}
+
+/* 🌐 Responsive Design */
+
+/* For tablets (<= 992px) */
+@media (max-width: 992px) {
+  .container {
+    width: 70%;
+    padding: 3rem;
+    border-radius: 2rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  form button {
+    font-size: 1.2rem;
+  }
+}
+
+/* For mobile phones (<= 600px) */
+@media (max-width: 600px) {
+  .container {
+    width: 90%;
+    padding: 2rem;
+    border-radius: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .amount input {
+    height: 2.8rem;
+    font-size: 0.9rem;
+  }
+
+  .dropdown {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .select-container {
+    width: 100%;
+  }
+
+  .dropdown i {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+  }
+
+  .msg {
+    font-size: 0.9rem;
+  }
+
+  form button {
+    font-size: 1rem;
+    height: 2.8rem;
+  }
+}
