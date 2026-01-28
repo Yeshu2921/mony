@@ -212,3 +212,23 @@ form button:hover {
     height: 2.8rem;
   }
 }
+.details-link {
+  display: block;
+  font-size: 0.75rem;
+  margin-top: 8px;
+  color: #333;
+  text-decoration: underline;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+}
+
+#swap-btn {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#swap-btn:active {
+  transform: scale(0.9);
+  }
+  
