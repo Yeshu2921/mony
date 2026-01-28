@@ -1,5 +1,5 @@
 // codes.js or app.js
-const countryList = {
+export const countryList = {
     AED: "AE", // United Arab Emirates Dirham
     AFN: "AF", // Afghan Afghani
     ALL: "AL", // Albanian Lek
@@ -155,4 +155,5 @@ const countryList = {
     ZAR: "ZA", // South African Rand
     ZMW: "ZM", // Zambian Kwacha
     ZWL: "ZW", // Zimbabwean Dollar
+
 };
