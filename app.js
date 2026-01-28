@@ -1,72 +1,105 @@
+import React, { useState, useEffect } from 'react';
+import { countryList } from './codes';
+import './style.css';
+
 const BASE_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies";
 
-const dropdowns = document.querySelectorAll(".dropdown select");
-const btn = document.querySelector("form button");
-const fromCurr = document.querySelector(".from select");
-const toCurr = document.querySelector(".to select");
-const msg = document.querySelector(".msg");
-const swapBtn = document.getElementById("swap-btn");
+function App() {
+  const [amount, setAmount] = useState(1);
+  const [fromCurr, setFromCurr] = useState("USD");
+  const [toCurr, setToCurr] = useState("INR");
+  const [msg, setMsg] = useState("Fetching exchange rate...");
 
-// Populate dropdowns
-for (let select of dropdowns) {
-  for (let currCode in countryList) {
-    let newOption = document.createElement("option");
-    newOption.innerText = currCode;
-    newOption.value = currCode;
-    if (select.name === "from" && currCode === "USD") {
-      newOption.selected = "selected";
-    } else if (select.name === "to" && currCode === "INR") {
-      newOption.selected = "selected";
+  // Fetch exchange rate logic
+  const updateExchangeRate = async () => {
+    let amtVal = amount < 1 ? 1 : amount;
+    try {
+      const URL = `${BASE_URL}/${fromCurr.toLowerCase()}.json`;
+      const response = await fetch(URL);
+      const data = await response.json();
+      const rate = data[fromCurr.toLowerCase()][toCurr.toLowerCase()];
+      const finalAmount = (amtVal * rate).toFixed(2);
+      setMsg(`${amtVal} ${fromCurr} = ${finalAmount} ${toCurr}`);
+    } catch (error) {
+      setMsg("Error fetching exchange rate!");
+      console.error("Error:", error);
     }
-    select.append(newOption);
-  }
+  };
 
-  select.addEventListener("change", (evt) => updateFlag(evt.target));
+  // Initial load
+  useEffect(() => {
+    updateExchangeRate();
+  }, []);
+
+  const handleSwap = () => {
+    setFromCurr(toCurr);
+    setToCurr(fromCurr);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateExchangeRate();
+  };
+
+  return (
+    <div className="container">
+      <a href="../Hous-list.html#tableinfo" id="close">&times;</a>
+      <h2>Currency Converter</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="amount">
+          <p>Enter Amount</p>
+          <input 
+            className="box" 
+            type="number" 
+            value={amount} 
+            onChange={(e) => setAmount(e.target.value)} 
+            min="1" 
+          />
+        </div>
+
+        <div className="dropdown">
+          <div className="from">
+            <p>From</p>
+            <div className="select-container">
+              {/* Flag updates automatically based on fromCurr */}
+              <img src={`https://flagsapi.com/${countryList[fromCurr]}/flat/64.png`} alt="flag" />
+              <select name="from" value={fromCurr} onChange={(e) => setFromCurr(e.target.value)}>
+                {Object.keys(countryList).map((code) => (
+                  <option key={code} value={code}>{code}</option>
+                ))}
+              </select>
+            </div>
+            {/* 🌐 New Dynamic Link for Country Details */}
+            <a 
+              href={`https://www.iban.com/currency-codes`} 
+              target="_blank" 
+              rel="noreferrer" 
+              className="details-link"
+            >
+              View {fromCurr} Details
+            </a>
+          </div>
+
+          <i className="fa-solid fa-arrow-right-arrow-left" id="swap-btn" onClick={handleSwap}></i>
+
+          <div className="to">
+            <p>To</p>
+            <div className="select-container">
+              <img src={`https://flagsapi.com/${countryList[toCurr]}/flat/64.png`} alt="flag" />
+              <select name="to" value={toCurr} onChange={(e) => setToCurr(e.target.value)}>
+                {Object.keys(countryList).map((code) => (
+                  <option key={code} value={code}>{code}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="msg">{msg}</div>
+        <button type="submit">Get Exchange Rate</button>
+      </form>
+    </div>
+  );
 }
 
-// Update flag
-const updateFlag = (element) => {
-  let currCode = element.value;
-  let countryCode = countryList[currCode];
-  let newSrc = `https://flagsapi.com/${countryCode}/flat/64.png`;
-  let img = element.parentElement.querySelector("img");
-  img.src = newSrc;
-};
-
-// Fetch live exchange rate
-const updateExchangeRate = async () => {
-  let amount = document.querySelector(".amount input");
-  let amtVal = amount.value || 1;
-  if (amtVal < 1) amtVal = 1;
-
-  try {
-    const URL = `${BASE_URL}/${fromCurr.value.toLowerCase()}.json`;
-    const response = await fetch(URL);
-    const data = await response.json();
-    const rate = data[fromCurr.value.toLowerCase()][toCurr.value.toLowerCase()];
-    const finalAmount = (amtVal * rate).toFixed(2);
-
-    msg.innerText = `${amtVal} ${fromCurr.value} = ${finalAmount} ${toCurr.value}`;
-  } catch (error) {
-    msg.innerText = "Error fetching exchange rate!";
-    console.error("Error:", error);
-  }
-};
-
-// Swap currencies
-swapBtn.addEventListener("click", () => {
-  const temp = fromCurr.value;
-  fromCurr.value = toCurr.value;
-  toCurr.value = temp;
-  updateFlag(fromCurr);
-  updateFlag(toCurr);
-  updateExchangeRate();
-});
-
-// Events
-btn.addEventListener("click", (evt) => {
-  evt.preventDefault();
-  updateExchangeRate();
-});
-
-window.addEventListener("load", () => updateExchangeRate());
+export default App;
